@@ -26,13 +26,13 @@ Näin asennat Jenkinsin
 -------------------------
 
 GitHub toimintakuntoon
-    * Manage jenkins -> Manage plugins -> Available -välilehti: Etsi GitHub plugin ja asenna.
-    * Mene usersin juuressa sijaitsevaan .ssh -kansioon ja seuraa [ohjeita](https://help.github.com/articles/generating-ssh-keys)
+* Manage jenkins -> Manage plugins -> Available -välilehti: Etsi GitHub plugin ja asenna.
+* Mene usersin juuressa sijaitsevaan .ssh -kansioon ja seuraa [ohjeita](https://help.github.com/articles/generating-ssh-keys)
 
 Jenkins turvalliseksi [täältä](https://wiki.jenkins-ci.org/display/JENKINS/Standard+Security+Setup)
 
 Maven
-    * Manage jenkins -> Configure System
-    * Maven -kohdan alta pitäisi defaulttiasetusten riittää, nimeksi riittää Maven.
+* Manage jenkins -> Configure System
+* Maven -kohdan alta pitäisi defaulttiasetusten riittää, nimeksi riittää Maven.
     
 Nyt pitäisi Jenkinsin olla valmis ja ensimmäisen laskarin [ohjeita soveltamalla](https://github.com/mluukkai/ohtu2013/wiki/laskari-1) saat projektisi liitettyä.
