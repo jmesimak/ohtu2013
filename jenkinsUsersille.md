@@ -36,3 +36,5 @@ Maven
 * Maven -kohdan alta pitäisi defaulttiasetusten riittää, nimeksi riittää Maven.
     
 Nyt pitäisi Jenkinsin olla valmis ja ensimmäisen laskarin [ohjeita soveltamalla](https://github.com/mluukkai/ohtu2013/wiki/laskari-1) saat projektisi liitettyä.
+
+*Armon vuonna 2013 Helsingin Exactumissa 26.3. -J.J.M*
