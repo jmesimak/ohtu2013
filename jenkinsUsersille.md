@@ -4,7 +4,7 @@ Näin asennat Jenkinsin
 1. Tomcat usersille
 -------------------
 
-* Ota ssh-yhteys laitoksen users-palvelimelle
+* Ota ssh-yhteys laitoksen users-palvelimelle:
    	 ssh omatunnari@users.cs.helsinki.fi
 * Asenna tomcat komennolla
     wanna-tomcat
