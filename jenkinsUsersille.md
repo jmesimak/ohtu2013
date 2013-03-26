@@ -4,28 +4,22 @@ Näin asennat Jenkinsin
 1. Tomcat usersille
 -------------------
 
-* Ota ssh-yhteys laitoksen users-palvelimelle:
-   	 ssh omatunnari@users.cs.helsinki.fi
-* Asenna tomcat komennolla
-    wanna-tomcat
+* Ota ssh-yhteys laitoksen users-palvelimelle: ssh omatunnari@users.cs.helsinki.fi
+* Asenna tomcat komennolla: wanna-tomcat
 
 
 2. Jenkinsin lataaminen
 -----------------------
 
-* Mene tomcatin webapps kansioon
-    cd tomcat/webapps
-* Lataa jenkins
-    wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war
+* Mene tomcatin webapps kansioon: cd tomcat/webapps
+* Lataa jenkins: wget http://mirrors.jenkins-ci.org/war/latest/jenkins.war
     
     
 3. Tomcat käyntiin
 ------------------
 
-* Käynnistä tomcat komennolla
-    start-tomcat
-* Kokeile toimiiko Jenkins
-    t-omatunnari.users.cs.helsinki.fi/jenkins
+* Käynnistä tomcat komennolla: start-tomcat
+* Kokeile toimiiko Jenkins: t-omatunnari.users.cs.helsinki.fi/jenkins
     
 
 4. Jenkinsin konffaaminen
