@@ -3,6 +3,7 @@ package ohtu.services;
 import ohtu.domain.User;
 import java.util.ArrayList;
 import java.util.List;
+import ohtu.data_access.FileUserDAO;
 import ohtu.data_access.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -39,6 +40,7 @@ public class AuthenticationService {
         }
 
         userDao.add(new User(username, password));
+        
 
         return true;
     }
