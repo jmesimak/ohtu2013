@@ -21,6 +21,12 @@ public class VarastoTest {
         varasto = new Varasto(10);
         esitaytettyVarasto = new Varasto(15, 5);
     }
+    
+    @Test
+    public void luodaanNollaVarasto() {
+        Varasto v = new Varasto(0);
+        assertEquals(0, v.getTilavuus(), 0.0001);
+    }
 
     @Test
     public void konstruktoriLuoTyhjanVaraston() {
