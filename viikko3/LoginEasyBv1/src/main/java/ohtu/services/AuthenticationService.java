@@ -4,6 +4,7 @@ import ohtu.domain.User;
 import java.util.ArrayList;
 import java.util.List;
 import ohtu.data_access.UserDao;
+import org.springframework.util.StringUtils;
 
 public class AuthenticationService {
 
@@ -40,6 +41,21 @@ public class AuthenticationService {
 
     private boolean invalid(String username, String password) {
         // validity check of username and password
+        boolean usernameContainsOnlyAllowedLetters = username.matches("[a-zA-Z]+\\.?");
+        boolean passwordContainsOnlyLetters = password.matches("[a-zA-Z]+\\.?");
+        
+        if (!usernameContainsOnlyAllowedLetters) {
+            return true;
+        }
+        
+        if (passwordContainsOnlyLetters) {
+            return true;
+        }
+        
+        if (username.length() < 3 || password.length() < 8 ) {
+            return true;
+        }
+        
 
         return false;
     }
