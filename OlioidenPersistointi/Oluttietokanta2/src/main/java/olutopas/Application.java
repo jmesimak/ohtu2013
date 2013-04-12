@@ -41,16 +41,18 @@ public class Application {
             } else if (command.equals("4")) {
                 listBreweries();
             } else if (command.equals("5")) {
-                deleteBeer();            
+                deleteBeer();
             } else if (command.equals("6")) {
-                addPub();            
+                addPub();
             } else if (command.equals("7")) {
                 addBeerToPub();
             } else if (command.equals("8")) {
                 showBeersInPub();
             } else if (command.equals("9")) {
                 listPubs();
-            }  else {
+            } else if (command.equals("d")) {
+                removeBeerFromPub();
+            } else {
                 System.out.println("unknown command");
             }
 
@@ -68,10 +70,11 @@ public class Application {
         System.out.println("3   add beer");
         System.out.println("4   list breweries");
         System.out.println("5   delete beer");
-        System.out.println("6   add pub");               
-        System.out.println("7   add beer to pub");     
+        System.out.println("6   add pub");
+        System.out.println("7   add beer to pub");
         System.out.println("8   find beers by pub");
         System.out.println("9   list all pubs and what they serve");
+        System.out.println("d   remove beer from pub");
         System.out.println("0   quit");
         System.out.println("");
     }
@@ -224,45 +227,45 @@ public class Application {
         pub.addBeer(beer);
         server.save(pub);
     }
-    
+
     private void showBeersInPub() {
         System.out.print("Please give the name of the pub: ");
         String pubName = scanner.nextLine();
-        
+
         Pub pub = server.find(Pub.class).where().like("name", pubName).findUnique();
-        
+
         if (pub == null) {
             System.out.println("Pub was not found. Has it been added yet?");
             return;
         }
-        
+
         List<Beer> beers = pub.getBeers();
-        
+
         System.out.println(pub);
         System.out.println("Beer list");
         for (Beer beer : beers) {
             System.out.println(beer);
         }
     }
-    
-        private void showBeersInPubByPub(String pubName) {
-        
+
+    private void showBeersInPubByPub(String pubName) {
+
         Pub pub = server.find(Pub.class).where().like("name", pubName).findUnique();
-        
+
         if (pub == null) {
             System.out.println("Pub was not found. Has it been added yet?");
             return;
         }
-        
+
         List<Beer> beers = pub.getBeers();
-        
+
         System.out.println(pub);
         System.out.println("Beer list");
         for (Beer beer : beers) {
             System.out.println(beer);
         }
     }
-    
+
     private void listPubs() {
         List<Pub> pubs = server.find(Pub.class).findList();
         for (Pub pub : pubs) {
@@ -271,4 +274,27 @@ public class Application {
         }
     }
 
+    private void removeBeerFromPub() {
+        System.out.print("Give the pub name: ");
+        String pubName = scanner.nextLine();
+        System.out.print("Give the beer name: ");
+        String beerName = scanner.nextLine();
+
+        Pub pub = server.find(Pub.class).where().like("name", pubName).findUnique();
+
+        if (pub == null) {
+            System.out.println("Pub was not found. Has it been added yet?");
+            return;
+        }
+
+        Beer beer = server.find(Beer.class).where().like("name", beerName).findUnique();
+
+        if (beer == null) {
+            System.out.println("Beer was not found. Has it been added yet?");
+            return;
+        }
+        
+        pub.removeBeer(beer);
+        System.out.println(beer.getName() + " removed from " + pub.getName());
+    }
 }
