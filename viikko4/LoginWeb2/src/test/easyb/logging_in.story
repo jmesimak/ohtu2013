@@ -68,3 +68,24 @@ scenario "nonexistent user can not login to system", {
         driver.getPageSource().contains("wrong username or password").shouldBe true
     }
 }
+
+scenario "A new user account can be created if a proper unused username and a proper password are given", {
+    given 'register new user selected',{
+        driver = new HtmlUnitDriver();
+        driver.get("http://localhost:8080");
+        element = driver.findElement(By.linkText("register new user"));       
+        element.click();
+    }
+    when 'a correct username and a correct password are given', {
+        element = driver.findElement(By.name("username"));
+        element.sendKeys("esapekka");
+        element = driver.findElement(By.name("password"));
+        element.sendKeys("somePassword123CamelCaseIsBest");
+        element = driver.findElement(By.name("passwordConfirmation"));
+        element.sendKeys("somePassword123CamelCaseIsBest");
+        element.submit();        
+    }
+    then 'a new user will be created', {
+        driver.getPageSource().contains("Welcome").shouldBe true
+    }
+}
