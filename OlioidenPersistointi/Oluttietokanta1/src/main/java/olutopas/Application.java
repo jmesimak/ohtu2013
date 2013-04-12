@@ -6,11 +6,14 @@ import java.util.Scanner;
 import javax.persistence.OptimisticLockException;
 import olutopas.model.Beer;
 import olutopas.model.Brewery;
+import olutopas.model.Rating;
+import olutopas.model.User;
 
 public class Application {
 
     private EbeanServer server;
     private Scanner scanner = new Scanner(System.in);
+    private User sessionUser;
 
     public Application(EbeanServer server) {
         this.server = server;
@@ -20,8 +23,20 @@ public class Application {
         if (newDatabase) {
             seedDatabase();
         }
+        System.out.println("LOGIN ROUTINE INITIATED (GIVE ? TO REGISTER)");
+        while (true) {
+            System.out.print("USERNAME: ");
+            String komento = scanner.nextLine();
+            if (komento.equals("?")) {
+                registerUser();
+            } else {
+                if (login(komento)) {
+                    break;
+                }
+            }
+        }
 
-        System.out.println("Welcome!");
+
 
         while (true) {
             menu();
@@ -46,6 +61,14 @@ public class Application {
                 addBrewery();
             } else if (command.equals("8")) {
                 deleteBrewery();
+            } else if (command.equals("all")) {
+                listUsers();
+            } else if (command.equals("t")) {
+                addRating();
+            } else if (command.equals("c")) {
+                listRatingsByUser();
+            } else if (command.equals("k")) {
+                getAverageRatingForBeer();
             } else {
                 System.out.println("unknown command");
             }
@@ -67,6 +90,11 @@ public class Application {
         System.out.println("6   list beers");
         System.out.println("7   add brewery");
         System.out.println("8   delete brewery");
+        System.out.println("?   register user");
+        System.out.println("all list users");
+        System.out.println("t add rating");
+        System.out.println("c list user ratings");
+        System.out.println("k get beer average rating");
         System.out.println("0   quit");
         System.out.println("");
     }
@@ -83,13 +111,13 @@ public class Application {
         // luodaan olut ilman panimon asettamista
         Beer b = new Beer("Märzen");
         server.save(b);
-        
+
         // jotta saamme panimon asetettua, tulee olot lukea uudelleen kannasta
-        b = server.find(Beer.class, b.getId());        
-        brewery = server.find(Brewery.class, brewery.getId());        
+        b = server.find(Beer.class, b.getId());
+        brewery = server.find(Brewery.class, brewery.getId());
         brewery.addBeer(b);
         server.save(brewery);
-        
+
         server.save(new Brewery("Paulaner"));
     }
 
@@ -128,14 +156,41 @@ public class Application {
             System.out.println(brewery);
         }
     }
-    
+
     private void listBeers() {
         List<Beer> beers = server.find(Beer.class).findList();
         for (Beer beer : beers) {
             System.out.println(beer);
         }
     }
-    
+
+    private void registerUser() {
+        System.out.print("username pls: ");
+        String name = scanner.nextLine();
+        User newUser = new User(name);
+        server.save(newUser);
+        System.out.println("user created!");
+    }
+
+    private boolean login(String name) {
+        List<User> users = server.find(User.class).findList();
+        for (User user : users) {
+            if (user.getName().equals(name)) {
+                System.out.println("Welcome to Ratebeer " + name);
+                this.sessionUser = user;
+                return true;
+            }
+        }
+        System.out.println("Username " + name + " not found. Please register to use Ratebeer");
+        return false;
+    }
+
+    private List<User> listUsers() {
+        List<User> users = server.find(User.class).findList();
+        System.out.println("Found " + users.size() + " users");
+        return users;
+    }
+
     private void addBrewery() {
         System.out.print("give the name: ");
         String name = scanner.nextLine();
@@ -187,13 +242,61 @@ public class Application {
         System.out.print("brewery to delete: ");
         String deletable = scanner.nextLine();
         Brewery toDelete = server.find(Brewery.class).where().like("name", deletable).findUnique();
-        
+
         if (toDelete == null) {
             System.out.println(deletable + " not found");
             return;
         }
-        
+
         server.delete(toDelete);
         System.out.println("deleted: " + deletable);
+    }
+
+    private void addRating() {
+        System.out.print("give the name of the beer: ");
+        String beerName = scanner.nextLine();
+        List<Beer> beers = server.find(Beer.class).findList();
+        for (Beer beer : beers) {
+            if (beer.getName().equals(beerName)) {
+                System.out.print("give rating: ");
+                int value = Integer.parseInt(scanner.nextLine());
+                Rating r = new Rating(beer, this.sessionUser, value);
+                this.sessionUser.addRating(r);
+                server.save(r);
+                return;
+            }
+        }
+        System.out.println("beer was not found from the database, try adding it first");
+    }
+
+    private void listRatingsByUser() {
+        System.out.print("give the name of the user: ");
+        String name = scanner.nextLine();
+        for (User u : listUsers()) {
+            if (u.getName().equals(name)) {
+                List<Rating> ratings = u.getRatings();
+                for (Rating rating : ratings) {
+                    System.out.println(rating);
+                }
+                return;
+            }
+        }
+
+    }
+
+    private void getAverageRatingForBeer() {
+        System.out.print("give the name of the beer: ");
+        String name = scanner.nextLine();
+        Beer beerToFind = server.find(Beer.class).where().like("name", name).findUnique();
+        if (beerToFind == null) {
+            System.out.println("Beer not found.");
+            return;
+        }
+        List<Rating> ratings = beerToFind.getRatings();
+        int sum = 0;
+        for (Rating rating : ratings) {
+            sum += rating.getValue();
+        }
+        System.out.println("Average rating for "+beerToFind.getName()+": "+sum/ratings.size());
     }
 }

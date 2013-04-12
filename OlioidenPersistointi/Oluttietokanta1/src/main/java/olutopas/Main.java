@@ -1,6 +1,5 @@
 package olutopas;
 
-import com.avaje.ebean.Ebean;
 import com.avaje.ebean.EbeanServer;
 import com.avaje.ebean.EbeanServerFactory;
 import com.avaje.ebean.config.DataSourceConfig;
@@ -10,6 +9,8 @@ import olutopas.model.Beer;
 import olutopas.model.Brewery;
 
 import com.avaje.ebean.Transaction;
+import olutopas.model.Rating;
+import olutopas.model.User;
 
 public class Main {
 
@@ -54,6 +55,8 @@ public class Main {
 
         config.addClass(Beer.class);
         config.addClass(Brewery.class);
+        config.addClass(User.class);
+        config.addClass(Rating.class);
 
         if (dropAndCreateDatabase) {
             config.setDdlGenerate(true);

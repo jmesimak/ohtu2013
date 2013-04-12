@@ -1,6 +1,7 @@
 package olutopas.model;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -16,6 +17,9 @@ public class Beer {
     
     @ManyToOne
     private Brewery brewery;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Rating> ratings;
 
     public Beer() {
     }
@@ -46,6 +50,14 @@ public class Beer {
 
     public void setBrewery(Brewery brewery) {
         this.brewery = brewery;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 
     @Override

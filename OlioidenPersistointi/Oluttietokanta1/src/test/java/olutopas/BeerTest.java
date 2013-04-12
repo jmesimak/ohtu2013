@@ -38,19 +38,19 @@ public class BeerTest {
         ebean = EbeanServerFactory.create(config);
     }
 
-    @Test
-    public void brewerySavedCorrectly() {
-        Brewery brewery = new Brewery("Schlenkerla");
-
-        brewery.addBeer(new Beer("Urbock"));
-        brewery.addBeer(new Beer("Lager"));
-
-        ebean.save(brewery);
-
-        Brewery fromBase = ebean.find(Brewery.class, brewery.getId());
-
-        assertTrue(fromBase != null);
-        assertEquals("Schlenkerla", fromBase.getName());
-        assertEquals(2, fromBase.getBeers().size());
-    }
+//    @Test
+//    public void brewerySavedCorrectly() {
+//        Brewery brewery = new Brewery("Schlenkerla");
+//
+//        brewery.addBeer(new Beer("Urbock"));
+//        brewery.addBeer(new Beer("Lager"));
+//
+//        ebean.save(brewery);
+//
+//        Brewery fromBase = ebean.find(Brewery.class, brewery.getId());
+//
+//        assertTrue(fromBase != null);
+//        assertEquals("Schlenkerla", fromBase.getName());
+//        assertEquals(2, fromBase.getBeers().size());
+//    }
 }
