@@ -4,6 +4,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -17,6 +18,9 @@ public class Beer {
     
     @ManyToOne
     private Brewery brewery;
+    
+    @ManyToMany(mappedBy = "beers", cascade = CascadeType.ALL)
+    private List<Pub> pubs;
     
     @OneToMany(cascade = CascadeType.ALL)
     private List<Rating> ratings;
