@@ -40,6 +40,12 @@ public class Application {
                 listBreweries();
             } else if (command.equals("5")) {
                 deleteBeer();
+            } else if (command.equals("6")) {
+                listBeers();
+            } else if (command.equals("7")) {
+                addBrewery();
+            } else if (command.equals("8")) {
+                deleteBrewery();
             } else {
                 System.out.println("unknown command");
             }
@@ -58,6 +64,9 @@ public class Application {
         System.out.println("3   add beer");
         System.out.println("4   list breweries");
         System.out.println("5   delete beer");
+        System.out.println("6   list beers");
+        System.out.println("7   add brewery");
+        System.out.println("8   delete brewery");
         System.out.println("0   quit");
         System.out.println("");
     }
@@ -119,6 +128,20 @@ public class Application {
             System.out.println(brewery);
         }
     }
+    
+    private void listBeers() {
+        List<Beer> beers = server.find(Beer.class).findList();
+        for (Beer beer : beers) {
+            System.out.println(beer);
+        }
+    }
+    
+    private void addBrewery() {
+        System.out.print("give the name: ");
+        String name = scanner.nextLine();
+        Brewery brewery = new Brewery(name);
+        server.save(brewery);
+    }
 
     private void addBeer() {
         System.out.print("to which brewery: ");
@@ -158,5 +181,19 @@ public class Application {
         server.delete(beerToDelete);
         System.out.println("deleted: " + beerToDelete);
 
+    }
+
+    private void deleteBrewery() {
+        System.out.print("brewery to delete: ");
+        String deletable = scanner.nextLine();
+        Brewery toDelete = server.find(Brewery.class).where().like("name", deletable).findUnique();
+        
+        if (toDelete == null) {
+            System.out.println(deletable + " not found");
+            return;
+        }
+        
+        server.delete(toDelete);
+        System.out.println("deleted: " + deletable);
     }
 }

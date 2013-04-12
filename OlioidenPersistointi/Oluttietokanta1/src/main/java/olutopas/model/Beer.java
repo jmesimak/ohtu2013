@@ -1,8 +1,10 @@
 package olutopas.model;
 
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Beer {
@@ -13,15 +15,15 @@ public class Beer {
     private Integer id;
     
     @ManyToOne
-    Brewery brewery;
+    private Brewery brewery;
 
     public Beer() {
     }
-    
+
     public Beer(String name) {
         this.name = name;
-    }        
-    
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }
@@ -50,6 +52,6 @@ public class Beer {
     public String toString() {
         // olioiden kannattaa sisäisestikin käyttää gettereitä oliomuuttujien sijaan
         // näin esim. olueeseen liittyvä panimo tulee varmasti ladattua kannasta
-        return getName() + " ("+getBrewery().getName()+")";
-    }     
+        return getName() + " (" + getBrewery().getName() + ")";
+    }
 }
