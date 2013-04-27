@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 public class Beer {
 
     private String name;
+    
     @Id
     Integer id;
 
