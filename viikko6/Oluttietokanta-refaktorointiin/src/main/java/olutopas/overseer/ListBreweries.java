@@ -1,6 +1,7 @@
-package olutopas;
+package olutopas.overseer;
 
 import java.util.List;
+import olutopas.Datamapper;
 import olutopas.model.Brewery;
 
 public class ListBreweries implements Command {

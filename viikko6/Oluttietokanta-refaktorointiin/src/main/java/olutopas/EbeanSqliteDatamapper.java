@@ -10,6 +10,7 @@ import olutopas.model.User;
 public class EbeanSqliteDatamapper implements Datamapper {
 
     private EbeanServer server;
+    private User user;
 
     public EbeanSqliteDatamapper(EbeanServer server) {
         this.server = server;
@@ -58,5 +59,15 @@ public class EbeanSqliteDatamapper implements Datamapper {
     @Override
     public void saveRating(Rating rating) {
         server.save(rating);
+    }
+
+    @Override
+    public User getCurrentUser() {
+        return this.user;
+    }
+
+    @Override
+    public void setCurrentUser(User user) {
+        this.user = user;
     }
 }

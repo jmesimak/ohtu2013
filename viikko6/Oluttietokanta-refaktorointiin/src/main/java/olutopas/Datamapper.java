@@ -25,4 +25,8 @@ public interface Datamapper {
     public void registerUser(User user);
     
     public void saveRating(Rating rating);
+    
+    public User getCurrentUser();
+    
+    public void setCurrentUser(User user);
 }
